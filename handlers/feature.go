@@ -3,9 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"ml-feature-store-api/models"
-	"ml-feature-store-api/storage"
-
+	"github.com/andwct/ml-feature-store-api/models"
+	"github.com/andwct/ml-feature-store-api/storage"
 	"github.com/gin-gonic/gin"
 )
 

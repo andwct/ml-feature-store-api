@@ -1,8 +1,8 @@
 package main
 
 import (
-	"ml-feature-store-api/routers"
-	"ml-feature-store-api/storage"
+	"github.com/andwct/ml-feature-store-api/routers"
+	"github.com/andwct/ml-feature-store-api/storage"
 )
 
 func main() {

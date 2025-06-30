@@ -1,9 +1,9 @@
-package memory
+package storage
 
 import (
 	"sync"
 
-	"ml-feature-store-api/models"
+	"github.com/andwct/ml-feature-store-api/models"
 )
 
 type InMemoryStore struct {

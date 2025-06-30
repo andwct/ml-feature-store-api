@@ -1,8 +1,9 @@
 package routers
 
 import (
-	"ml-feature-store-api/handlers"
-	"ml-feature-store-api/storage"
+	"github.com/andwct/ml-feature-store-api/storage"
+
+	"github.com/andwct/ml-feature-store-api/handlers"
 
 	"github.com/gin-gonic/gin"
 )
