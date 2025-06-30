@@ -24,3 +24,12 @@ A lightweight, in-memory feature store API built with Go and Gin. Designed for f
   "name": "temperature",
   "value": 28.5
 }
+
+📁 Project Structure
+ml-feature-store-api/
+├── main.go                 # Entry point
+├── models/                 # Feature model definition
+├── storage/                # In-memory store with mutex
+├── handlers/               # API logic (set/get feature)
+├── routers/                # Route setup
+├── go.mod                  # Go module config
