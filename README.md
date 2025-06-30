@@ -17,13 +17,21 @@ A lightweight, in-memory feature store API built with Go and Gin. Designed for f
 | GET    | `/features/:entity_id/:name`        | Retrieve a specific feature      |
 
 ## 📁 Project Structure
-ml-feature-store-api/
-├── main.go                 # Entry point
-├── models/                 # Feature model definition
-├── storage/                # In-memory store with mutex
-├── handlers/               # API logic (set/get feature)
-├── routers/                # Route setup
-├── go.mod                  # Go module config
+## 📁 Project Structure
+
+| File/Folder     | Description                     |
+|-----------------|---------------------------------|
+| `main.go`       | Entry point                    |
+| `go.mod`        | Go module configuration       |
+| `models/`       | Feature model definition       |
+| └─ `feature.go` | Struct definitions for Feature |
+| `storage/`      | In-memory store with mutex     |
+| └─ `store.go`   | Store implementation           |
+| `handlers/`     | API logic (set/get feature)    |
+| └─ `feature_handler.go` | Handlers for feature APIs |
+| `routers/`      | Route setup                   |
+| └─ `routers.go` | Router initialization          |
+
 
 ### Example Feature Payload (POST)
 
