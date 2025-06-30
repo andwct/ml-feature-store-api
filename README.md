@@ -44,50 +44,53 @@ A lightweight, in-memory feature store API built with Go and Gin. Designed for f
 ```
 
 ## 🧠 3 Key Takeaways from Building This Project
-1. 🔒 Understanding Lock()/Unlock() in Concurrent Access
-By implementing an in-memory store with sync.RWMutex, I learned the importance of using Lock() and Unlock() (or RLock()/RUnlock()) to protect shared data like a Go map.
 
-Without locks:
+### 1. 🔒 Understanding `Lock()`/`Unlock()` in Concurrent Access
 
-Concurrent reads/writes can cause data races
+By implementing an in-memory store with `sync.RWMutex`, I learned the importance of using `Lock()` and `Unlock()` (or `RLock()`/`RUnlock()`) to protect shared data like a Go map.
 
-Go maps will panic on simultaneous writes
+**Without locks:**
 
-With proper locking:
+- Concurrent reads/writes can cause data races  
+- Go maps will panic on simultaneous writes
 
-RLock() allows safe concurrent reads
+**With proper locking:**
 
-Lock() serializes writes
+- `RLock()` allows safe concurrent reads  
+- `Lock()` serializes writes  
+- `defer Unlock()` ensures clean, reliable code
 
-defer Unlock() ensures clean, reliable code
+> This is essential for building safe, concurrent systems.
 
-This is essential for building safe, concurrent systems.
+---
 
-2. 🚀 Practical Scenarios for Using an In-Memory Feature Store
-This kind of API can be used in many useful ways:
+### 2. 🚀 Practical Scenarios for Using an In-Memory Feature Store
 
-🧠 Online inference cache for low-latency model serving
+This kind of API can be useful in many ways:
 
-🧪 Rapid prototyping of ML pipelines or REST APIs
+- 🧠 **Online inference cache** for low-latency model serving  
+- 🧪 **Rapid prototyping** of ML pipelines or REST APIs  
+- 🧰 **Local development/testing** without needing Redis or a full database  
+- 📦 **Temporary store** in data pipelines  
+- 🌐 **Edge ML applications** with memory-constrained environments
 
-🧰 Local development/testing without needing Redis or a database
+---
 
-📦 Temporary store in data pipelines
+### 3. 🧱 Learning Go + Gin Project Structure (MVC Style)
 
-🌐 Edge ML applications with memory-constrained environments
+This project taught me how to structure a Go-based API server using a modular, maintainable pattern:
 
-3. 🧱 Learning Go + Gin Project Structure (MVC Style)
-This project taught me how to structure a Go-based API server:
 
-models/ → data schema
 
-handlers/ → API logic
+- models/ → data schema
 
-routers/ → route wiring
+- handlers/ → API logic
 
-storage/ → business logic (store/retrieve)
+- routers/ → route wiring
 
-main.go → entry point
+- storage/ → business logic (store/retrieve)
 
-Following this modular structure prepares the codebase for future improvements like adding Redis, databases, or Docker.
+- main.go → entry point
+
+> Following this modular structure prepares the codebase for future improvements like adding Redis, databases, or Docker.
 
