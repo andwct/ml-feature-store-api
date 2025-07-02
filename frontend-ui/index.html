@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ML Feature Store Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f8f8f8;
+    }
+    textarea, input {
+      width: 100%;
+      margin-top: 5px;
+      margin-bottom: 15px;
+      padding: 8px;
+      font-size: 1em;
+    }
+    button {
+      padding: 10px 15px;
+      margin-right: 10px;
+      font-size: 1em;
+      cursor: pointer;
+    }
+    pre {
+      background: #222;
+      color: #0f0;
+      padding: 15px;
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔍 ML Feature Store API Demo</h1>
+
+  <label for="entityId"><strong>🆔 Entity ID + Date</strong></label>
+  <input id="entityId" type="text" placeholder="e.g. user_123/2025-06-30" />
+
+  <label for="featureName"><strong>🧬 Feature Name</strong></label>
+  <input id="featureName" type="text" placeholder="e.g. temperature" />
+
+  <label for="featureValue"><strong>📈 Feature Value</strong></label>
+  <input id="featureValue" type="number" placeholder="e.g. 30" />
+
+  <div>
+    <button onclick="submitFeature()">🚀 Submit Feature</button>
+    <button onclick="getFeature()">📥 Get Feature</button>
+  </div>
+
+  <h2>📦 API Response</h2>
+  <pre id="response">No request yet...</pre>
+
+  <script>
+    const API_BASE = "http://localhost:8080";
+
+    async function submitFeature() {
+      const entity_id = document.getElementById("entityId").value.trim();
+      const name = document.getElementById("featureName").value.trim();
+      const value = parseFloat(document.getElementById("featureValue").value.trim());
+
+      if (!entity_id || !name || isNaN(value)) {
+        alert("⚠️ Please fill in Entity ID, Feature Name, and Value.");
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/features`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ entity_id, name, value })
+        });
+
+        const postResult = await res.json();
+        document.getElementById("response").textContent = "✅ Feature saved:\n" + JSON.stringify(postResult, null, 2);
+      } catch (e) {
+        document.getElementById("response").textContent = "❌ Error: " + e.message;
+      }
+    }
+
+    async function getFeature() {
+      const entity_id = document.getElementById("entityId").value.trim();
+      const name = document.getElementById("featureName").value.trim();
+
+      if (!entity_id || !name) {
+        alert("⚠️ Please enter both Entity ID and Feature Name.");
+        return;
+      }
+
+      const url = `${API_BASE}/features?entity_id=${encodeURIComponent(entity_id)}&name=${encodeURIComponent(name)}`;
+
+      try {
+        const res = await fetch(url);
+        const text = await res.text();
+        try {
+          const json = JSON.parse(text);
+          document.getElementById("response").textContent = JSON.stringify(json, null, 2);
+        } catch {
+          document.getElementById("response").textContent = "❌ Server did not return valid JSON:\n" + text;
+        }
+      } catch (e) {
+        document.getElementById("response").textContent = "❌ Error: " + e.message;
+      }
+    }
+
+  </script>
+</body>
+</html>

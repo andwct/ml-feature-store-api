@@ -14,7 +14,10 @@ func SetupRouter(store *storage.InMemoryStore) *gin.Engine {
 	featureHandler := handlers.NewFeatureHandler(store)
 
 	r.POST("/features", featureHandler.SetFeature)
-	r.GET("/features/:entity_id/:name", featureHandler.GetFeature)
+	r.GET("/features", featureHandler.GetFeature) // change from /features/:entity_id/:name
+	r.GET("/", func(c *gin.Context) {
+		c.File("./frontend-ui/index.html")
+	})
 
 	return r
 }

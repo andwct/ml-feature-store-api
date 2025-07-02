@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"net/http"
 
 	"github.com/andwct/ml-feature-store-api/models"
@@ -28,8 +29,14 @@ func (h *FeatureHandler) SetFeature(c *gin.Context) {
 }
 
 func (h *FeatureHandler) GetFeature(c *gin.Context) {
-	entityID := c.Param("entity_id")
-	name := c.Param("name")
+	entityID := c.Query("entity_id")
+	name := c.Query("name")
+	log.Printf("GetFeature called with entity_id=%s, name=%s\n", entityID, name)
+
+	if entityID == "" || name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "entity_id and name query params are required"})
+		return
+	}
 	key := entityID + ":" + name
 	if val, ok := h.Store.Get(key); ok {
 		c.JSON(http.StatusOK, val)
